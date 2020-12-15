@@ -1,0 +1,8 @@
+#!/bin/bash
+
+NEXT_PORT=$(grep PORT .env | cut -d '=' -f2)
+
+docker run -d --name "$1" --init -p "$NEXT_PORT":3000 -v "$(pwd)/$1:/home/project:cached" theiaide/theia-python:latest
+sudo chmod -R 777 ./"$1"
+
+echo  "PORT=$(($NEXT_PORT+1))" > .env
